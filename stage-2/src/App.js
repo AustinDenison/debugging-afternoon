@@ -5,7 +5,7 @@ import ShoppingCart from "./Components/ShoppingCart/ShoppingCart";
 import NavBar from "./Components/NavBar/NavBar";
 
 class App extends Component {
-  constuctor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       products: [],
@@ -21,13 +21,13 @@ class App extends Component {
       .get("https://practiceapi.devmountain.com/products/")
       .then(response => {
         this.setState({
-          products: response
+          products: response.data
         });
       });
   }
-  addToCart(item) {
+  addToCart(element) {
     this.setState({
-      cart: item
+      cart: [...this.state.cart, element]
     });
   }
   removeFromCart(index) {
@@ -55,7 +55,7 @@ class App extends Component {
         <NavBar navigate={this.navigate} />
         <div className="main-container">
           {showCart ? (
-            <ShoppingCart cart={cart} removeFromCart={this.removeFromCart} />
+            <ShoppingCart cart={cart} removeFromCart={this.removeFromCart} shoppingCart={this.shoppingCart}/>
           ) : (
             <StoreFront products={products} addToCart={this.addToCart} />
           )}
